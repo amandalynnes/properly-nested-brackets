@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Module docstring: One line description of what your program does.
+Module docstring: My program reads a file, tests it, and writes results.
 """
+
 __author__ = "Amanda Simmons"
 
 import sys
