@@ -4,7 +4,7 @@
 Module docstring: My program reads a file, tests it, and writes results.
 """
 
-__author__ = "Amanda Simmons, JT"
+__author__ = "Amanda Simmons, JT, Pete Mayor"
 
 import sys
 
@@ -19,9 +19,33 @@ import sys
 def is_nested(line):
     """Validate a single input line for correct nesting"""
     stack = []
-    for char in line:
-        stack.append(char)
+# (  )
+# [  ]
+# {  }
+# <  >
+# (*  *)
+    brackets = [')', '(', ']', '[', '}', '{', '>', '<', '*)', '(*']
+    # print(brackets)
+    index = 0
+    while index < len(line):
+        print(index)
+        if (index == len(line) - 1):
+            if line[index] in brackets:
+                stack.append(line[index])
+            break
+        next_two_char = line[index] + line[index+1]
+        print(next_two_char)
+        if (next_two_char in brackets):
+            index += 1
+            stack.append(next_two_char)
+        elif (line[index] in brackets):
+            stack.append(line[index])
+        index += 1
     print(stack)
+# plan for stack- look at last char of the stack.
+# if that char is a matching opening to the current char
+# remove the last char in the stack
+# if all of the brackets match up the stack should be empty
 
 
 def main(args):
