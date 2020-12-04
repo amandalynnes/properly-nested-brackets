@@ -27,6 +27,7 @@ def is_nested(line):
     brackets = {'(': ')', '[': ']', '{': '}', '<': '>', '(*': '*)'}
     # print(brackets)
     index = 0
+    position = 1
     print(line)
     while index < len(line):
         # print(index)
@@ -49,17 +50,17 @@ def is_nested(line):
             elif (line[index] == brackets[last_in_stack]):
                 stack.pop()
             elif next_two_char in brackets.values() or line[index] in brackets.values():
-                print(f'NO, {index}')
-                return
+                return f'NO {position}'
 
         elif next_two_char in brackets.values() or line[index] in brackets.values():
-            print(f'NO, {index}')
-            return
+            return f'NO {position}'
+
         index += 1
+        position += 1
     if stack:
-        print(f'NO, {index}')
+        return f'NO {position}'
     else:
-        print('YES')
+        return 'YES'
     # print(stack)
 # plan for stack- look at last char of the stack.
 # if that char is a matching opening to the current char
@@ -70,9 +71,14 @@ def is_nested(line):
 def main(args):
     """Open the input file and call `is_nested()` for each line"""
     # Results: print to console and also write to output file
+    results_list = []
     with open(args[0], 'r') as f:
         for line in f:
-            is_nested(line.strip())
+            results = is_nested(line)
+            results_list.append(results)
+    with open('output.txt', 'w') as f:
+        for result in results_list:
+            f.write(result + '\n')
 
 
 if __name__ == '__main__':
