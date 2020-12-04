@@ -24,24 +24,43 @@ def is_nested(line):
 # {  }
 # <  >
 # (*  *)
-    brackets = [')', '(', ']', '[', '}', '{', '>', '<', '*)', '(*']
+    brackets = {'(': ')', '[': ']', '{': '}', '<': '>', '(*': '*)'}
     # print(brackets)
     index = 0
+    print(line)
     while index < len(line):
-        print(index)
+        # print(index)
         if (index == len(line) - 1):
             if line[index] in brackets:
                 stack.append(line[index])
             break
         next_two_char = line[index] + line[index+1]
-        print(next_two_char)
+        # print(next_two_char)
         if (next_two_char in brackets):
             index += 1
             stack.append(next_two_char)
         elif (line[index] in brackets):
             stack.append(line[index])
+        if stack:
+            last_in_stack = stack[-1]
+            if (next_two_char == brackets[last_in_stack]):
+                index += 1
+                stack.pop()
+            elif (line[index] == brackets[last_in_stack]):
+                stack.pop()
+            elif next_two_char in brackets.values() or line[index] in brackets.values():
+                print(f'NO, {index}')
+                return
+
+        elif next_two_char in brackets.values() or line[index] in brackets.values():
+            print(f'NO, {index}')
+            return
         index += 1
-    print(stack)
+    if stack:
+        print(f'NO, {index}')
+    else:
+        print('YES')
+    # print(stack)
 # plan for stack- look at last char of the stack.
 # if that char is a matching opening to the current char
 # remove the last char in the stack
@@ -51,7 +70,7 @@ def is_nested(line):
 def main(args):
     """Open the input file and call `is_nested()` for each line"""
     # Results: print to console and also write to output file
-    with open('input.txt', 'r') as f:
+    with open(args[0], 'r') as f:
         for line in f:
             is_nested(line.strip())
 
